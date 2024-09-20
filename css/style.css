@@ -1,0 +1,61 @@
+@import url("https://fonts.googleapis.com/css2?family=Readex+Pro:wght@160..700&display=swap");
+* {
+  margin: 0;
+}
+
+body {
+  font-family: "Readex Pro", sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.nav {
+  background-color: #7fa4ff;
+  padding: 10px 25px;
+}
+
+.tasks {
+  display: flex;
+  height: 100%;
+}
+.tasks .task-list {
+  flex: 1;
+  max-width: 200px;
+  background-color: rgba(0, 0, 0, 0.15);
+  height: 100%;
+  border-right: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 10px;
+}
+.tasks .task-list input {
+  border: none;
+  height: 50px;
+  padding: 0px 15px;
+  font-family: "Readex Pro", sans-serif;
+  outline: none;
+}
+.tasks .task-list .list-name {
+  padding: 15px 15px;
+  background-color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  font-size: 14px;
+}
+.tasks .task-view {
+  flex: 3;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+.tasks .task-view .task {
+  display: flex;
+  gap: 10px;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 15px 0px;
+}/*# sourceMappingURL=style.css.map */
