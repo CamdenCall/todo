@@ -10,10 +10,11 @@ body {
   height: 100vh;
   overflow: hidden;
   box-sizing: border-box;
+  color: #252525;
 }
 
 .nav {
-  background-color: #7fa4ff;
+  background-color: #5fffc8;
   padding: 10px 25px;
 }
 
@@ -26,11 +27,10 @@ body {
   max-width: 200px;
   background-color: rgba(0, 0, 0, 0.15);
   height: 100%;
-  border-right: 1px solid black;
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  gap: 10px;
 }
 .tasks .task-list input {
   border: none;
@@ -57,5 +57,21 @@ body {
   gap: 10px;
   border-top: 1px solid rgba(0, 0, 0, 0.2);
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  padding: 15px 0px;
+  padding: 15px 10px;
+  padding-right: 25px;
+  justify-content: space-between;
+}
+.tasks .task-view .task div {
+  display: flex;
+  gap: 10px;
+}
+.tasks .task-view .task .tools {
+  gap: 25px;
+}
+.tasks .task-view .task img {
+  height: 20px;
+  cursor: pointer;
+}
+.tasks .task-view .task input[type=checkbox] {
+  cursor: pointer;
 }/*# sourceMappingURL=style.css.map */

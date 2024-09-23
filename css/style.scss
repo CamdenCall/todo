@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Readex+Pro:wght@160..700&display=swap');
 
-$blue: #7fa4ff;
+$green: #5fffc8;
 $black-20: rgba(0,0,0,0.2);
 * {
     margin: 0;
@@ -12,9 +12,10 @@ body {
     height: 100vh;
     overflow: hidden;
     box-sizing: border-box;
+    color: #252525;
 }
 .nav {
-    background-color: $blue;
+    background-color: $green;
     padding: 10px 25px;
 }
 .tasks {
@@ -25,11 +26,10 @@ body {
         max-width: 200px;
         background-color: rgba(0,0,0,0.15);
         height: 100%;
-        border-right: 1px solid black;
+        border-right: 1px solid $black-20;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
-        gap: 10px;
         input {
             border: none;
             height: 50px;
@@ -55,7 +55,23 @@ body {
             gap: 10px;
             border-top: 1px solid $black-20;
             border-bottom: 1px solid $black-20;
-            padding: 15px 0px;
+            padding: 15px 10px;
+            padding-right: 25px;
+            justify-content: space-between;
+            div {
+                display: flex;
+                gap: 10px;
+            }
+            .tools {
+                gap: 25px;
+            }
+            img {
+                height: 20px;
+                cursor: pointer;
+            }
+            input[type=checkbox] {
+                cursor: pointer;
+            }
         }
     }
 }
