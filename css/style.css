@@ -56,7 +56,6 @@ body {
   display: flex;
   gap: 10px;
   border-top: 1px solid rgba(0, 0, 0, 0.2);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   padding: 15px 10px;
   padding-right: 25px;
   justify-content: space-between;
@@ -69,9 +68,12 @@ body {
   gap: 25px;
 }
 .tasks .task-view .task img {
-  height: 20px;
+  height: 15px;
   cursor: pointer;
 }
 .tasks .task-view .task input[type=checkbox] {
   cursor: pointer;
+}
+.tasks .task-view .checked {
+  background-color: red;
 }/*# sourceMappingURL=style.css.map */

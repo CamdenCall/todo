@@ -50,11 +50,13 @@ body {
         display: flex;
         flex-direction: column;
         gap: 25px;
+        .tasks-list {
+
+        }
         .task {
             display: flex;
             gap: 10px;
             border-top: 1px solid $black-20;
-            border-bottom: 1px solid $black-20;
             padding: 15px 10px;
             padding-right: 25px;
             justify-content: space-between;
@@ -66,12 +68,15 @@ body {
                 gap: 25px;
             }
             img {
-                height: 20px;
+                height: 15px;
                 cursor: pointer;
             }
             input[type=checkbox] {
                 cursor: pointer;
             }
+        }
+        .checked {
+            background-color: red;
         }
     }
 }
