@@ -14,8 +14,11 @@ body {
 }
 
 .nav {
-  background-color: #5fffc8;
-  padding: 10px 25px;
+  background: linear-gradient(90deg, #9bf8f4, #6f7bf7);
+  padding: 15px 15px;
+}
+.nav h1 {
+  font-size: 1.5em;
 }
 
 .tasks {
@@ -52,6 +55,33 @@ body {
   flex-direction: column;
   gap: 25px;
 }
+.tasks .task-view .add-task {
+  width: 100%;
+  gap: 10px;
+  display: flex;
+}
+.tasks .task-view .add-task input {
+  flex: 2;
+  height: 35px;
+  padding-left: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.15);
+  border-radius: 5px;
+  outline: none;
+}
+.tasks .task-view .add-task input::-moz-placeholder {
+  color: rgba(0, 0, 0, 0.6);
+}
+.tasks .task-view .add-task input::placeholder {
+  color: rgba(0, 0, 0, 0.6);
+}
+.tasks .task-view .add-task button {
+  flex: 1;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.15);
+  border-radius: 5px;
+  cursor: pointer;
+}
 .tasks .task-view .task {
   display: flex;
   gap: 10px;
@@ -63,6 +93,12 @@ body {
 .tasks .task-view .task div {
   display: flex;
   gap: 10px;
+}
+.tasks .task-view .task div input {
+  font-size: 1em;
+  color: black;
+  border: none;
+  outline: none;
 }
 .tasks .task-view .task .tools {
   gap: 25px;
