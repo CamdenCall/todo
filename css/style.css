@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Readex+Pro:wght@160..700&display=swap");
 * {
   margin: 0;
+  font-family: "Readex Pro", sans-serif;
 }
 
 body {
@@ -35,11 +36,21 @@ body {
   flex-direction: column;
   justify-content: flex-start;
 }
+.tasks .task-list .add-list {
+  height: 50px;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+  border-top: 1px solid rgba(0, 0, 0, 0.5);
+  background: linear-gradient(90deg, #9bf8f4, #6f7bf7);
+  color: #252525;
+  text-align: left;
+  padding: 15px;
+  cursor: pointer;
+}
 .tasks .task-list input {
   border: none;
   height: 50px;
   padding: 0px 15px;
-  font-family: "Readex Pro", sans-serif;
   outline: none;
 }
 .tasks .task-list .list-name {
@@ -99,6 +110,8 @@ body {
   color: black;
   border: none;
   outline: none;
+  margin-top: 1px;
+  display: none;
 }
 .tasks .task-view .task .tools {
   gap: 25px;

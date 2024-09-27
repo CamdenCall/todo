@@ -13,6 +13,7 @@
     </div>
     <div class="tasks">
         <div class="task-list">
+            <button class="add-list">Create List +</button>
             <input type="text" placeholder="Search List">
             <div class="list-name">
                 List Name
@@ -22,7 +23,7 @@
             <h1>List Name</h1>
             <div class="add-task">
               <input type="text" placeholder="Enter a new task" id="task">
-              <button class="add" onclick="addTask()">Add Task</button>
+              <button class="add" onclick="tasks.addTask()">Add Task</button>
             </div>
             <div class="tasks-list">
                 <div class="task">
@@ -32,7 +33,7 @@
                         <input type="text" placeholder="Testing">
                     </div>
                     <div class="tools">
-                        <img src="images/edit.svg" class="edit" height="30">
+                        <img src="images/edit.svg" height="30">
                         <img src="images/delete.svg" class="delete">
                     </div>
                 </div>

@@ -3,8 +3,11 @@
 $green: #5fffc8;
 $black-20: rgba(0,0,0,0.2);
 $black-15: rgba(0,0,0,0.15);
+$black-50: rgba(0,0,0,0.5);
+$gradient: linear-gradient(90deg, #9bf8f4, #6f7bf7);;
 * {
     margin: 0;
+    font-family: "Readex Pro", sans-serif;
 }
 body {
     font-family: "Readex Pro", sans-serif;
@@ -35,11 +38,21 @@ body {
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
+        .add-list {
+            height: 50px;
+            border: none;
+            border-bottom: 1px solid $black-50;
+            border-top: 1px solid $black-50;
+            background: $gradient;
+            color: #252525;
+            text-align: left;
+            padding: 15px;
+            cursor: pointer;
+        }
         input {
             border: none;
             height: 50px;
             padding: 0px 15px;
-            font-family: "Readex Pro", sans-serif;
             outline: none;
         }
         .list-name {
@@ -94,6 +107,8 @@ body {
                     color: black;
                     border: none;
                     outline: none;
+                    margin-top: 1px;
+                    display: none;
                 }
             }
             .tools {
