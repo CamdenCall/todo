@@ -13,14 +13,29 @@
     </div>
     <div class="tasks">
         <div class="task-list">
-            <button class="add-list">Create List +</button>
+            <button class="add-list" onclick="tasks.openPopup()">Create List +</button>
+            <div class="popup">
+                <div class="card">
+                    <div>
+                        <h2>Create List</h2>
+                        <img src="images/exit.svg" onclick="tasks.closePopup()">
+                    </div>
+
+                    <input type="text" placeholder="List Name" id="listName">
+                    <button onclick="tasks.addList()">Create List</button>
+                </div>
+
+            </div>
             <input type="text" placeholder="Search List">
+            <!--
             <div class="list-name">
                 List Name
             </div>
+            -->
         </div>
         <div class="task-view">
-            <h1>List Name</h1>
+            <h1 id="list-header"></h1>
+            
             <div class="add-task">
               <input type="text" placeholder="Enter a new task" id="task">
               <button class="add" onclick="tasks.addTask()">Add Task</button>

@@ -1,45 +1,21 @@
 class Tasks {
     constructor() {
-        this.tasks = {}
+        this.tasks = []
+        this.list = ""
     }
-    updateTasks() {
-        let checkboxes = document.querySelectorAll("input[type=checkbox]")
-        checkboxes.forEach(element => {
-            let task = element.parentElement
-            let taskText = task.querySelector(".task-text p").textContent
-            element.addEventListener("click", () => {
-                element.parentElement.parentElement.classList.toggle("checked")
-                this.tasks[taskText].completed = true
-            })
-        })
-        document.querySelectorAll(".delete").forEach((element) => {
-            let task = element.parentElement.parentElement
-            element.addEventListener("click", () => {
-                this.removeTask(task.textContent)
-                task.remove()
-            })
-        })
-        document.querySelectorAll(".edit").forEach((element) => {
-            let task = element.parentElement.parentElement
-            let taskText = task.querySelector(".task-text p")
-            let oldTask = taskText.textContent;
-            let input = task.querySelector("input[type=text]")
-            element.addEventListener("click", () => {
-                taskText.style.display = "none";
-                input.style.display = "block";
-                input.value = oldTask;
-                //When the user clicks enter it saves the text
-                input.addEventListener("keypress", (event) => {
-                    if (event.key === "Enter") {
-                      let newTask = input.value
-                      this.editTask(oldTask, newTask)
-                      input.style.display = "none";
-                      taskText.style.display = "block";
-                      taskText.textContent = newTask;
-                    }
-                })
-            })
-        })
+    init() {
+        document.querySelectorAll(".list-name").forEach((element) => {
+            element.addEventListener("click", () => this.viewList(element));
+            element.addEventListener("contextmenu", (e) => this.manageList(e), false);
+        });        
+    }
+    addTask() {
+        let task = document.getElementById("task").value
+        const list = this.tasks.find((list) => list.name === this.list);
+        list.tasks.push({task: task, completed: false})
+        this.updateList(list.tasks)
+        document.getElementById("task").value = ""
+        this.updateTasks()
     }
 
     removeTask(task) {
@@ -49,22 +25,23 @@ class Tasks {
     }
 
     editTask(task, updatedTask) {
-        if (this.tasks.hasOwnProperty(task)) {
-            const completed = this.tasks[task].completed
-            delete this.tasks[task];
+        if (this.tasks[this.list].hasOwnProperty(task)) {
+            const completed = this.tasks[this.list][task]
+            delete this.tasks[this.list][task];
             this.tasks[updatedTask] = {completed: completed}
             console.log(this.tasks)
         }
     }
-    
 
     resetList() {
         const taskViewDiv = document.querySelector('.tasks-list');
         taskViewDiv.innerHTML = ""
     }
-    updateList() {
+
+    updateList(tasks) {
         this.resetList()
-        for(let task in this.tasks) {
+        console.log(tasks)
+        for(let task in tasks) {
             const taskViewDiv = document.querySelector('.tasks-list');
     
             // Create the outer div with class "task"
@@ -82,7 +59,7 @@ class Tasks {
             // Create the paragraph element for task details
             const taskDetails = document.createElement('p');
             taskDetails.classList.add('task-details');
-            taskDetails.textContent = task; // Add your task text here
+            taskDetails.textContent = tasks[task].task; // Add your task text here
     
             const edit = document.createElement('input');
             edit.type = "text"
@@ -125,12 +102,81 @@ class Tasks {
     
         }
     }
-    addTask() {
-        let task = document.getElementById("task").value
-        this.tasks[task] = {completed: false}
-        this.updateList()
-        document.getElementById("task").value = ""
-        this.updateTasks()
+
+
+    updateTasks() {
+        let checkboxes = document.querySelectorAll("input[type=checkbox]")
+        checkboxes.forEach(element => {
+            let task = element.parentElement
+            let taskText = task.querySelector(".task-text p").textContent
+            element.addEventListener("click", () => {
+                element.parentElement.parentElement.classList.toggle("checked")
+                this.tasks[taskText].completed = true
+            })
+        })
+        document.querySelectorAll(".delete").forEach((element) => {
+            let task = element.parentElement.parentElement
+            element.addEventListener("click", () => {
+                this.removeTask(task.textContent)
+                task.remove()
+            })
+        })
+        document.querySelectorAll(".edit").forEach((element) => {
+            let task = element.parentElement.parentElement
+            let taskText = task.querySelector(".task-text p")
+            let oldTask = taskText.textContent;
+            let input = task.querySelector("input[type=text]")
+            element.addEventListener("click", () => {
+                taskText.style.display = "none";
+                input.style.display = "block";
+                input.value = oldTask;
+                //When the user clicks enter it saves the text
+                input.addEventListener("keypress", (event) => {
+                    if (event.key === "Enter") {
+                      let newTask = input.value
+                      this.editTask(oldTask, newTask)
+                      input.style.display = "none";
+                      taskText.style.display = "block";
+                      taskText.textContent = newTask;
+                    }
+                })
+            })
+        })
+    }
+
+    addList() {
+        let listName = document.getElementById("listName").value
+        let sideList = document.querySelector(".task-list")
+        let listElement = document.createElement("div")
+        listElement.textContent = listName
+        listElement.classList.add("list-name")
+        sideList.appendChild(listElement)
+
+        this.tasks.push({name: listName, tasks: []})
+        this.init()
+    }
+    manageList(element) {
+        element.preventDefault();
+        console.log("test")
+    }
+
+    viewList(element) {
+        console.log(this.tasks)
+        let listName = element.textContent
+        let listHeader = document.getElementById("list-header")
+        this.list = listName
+        listHeader.textContent = this.list
+    }
+
+    closePopup() {
+        let popup = document.querySelector(".popup")
+        popup.style.display = "none";
+    }
+
+    openPopup() {
+        let popup = document.querySelector(".popup")
+        popup.style.display = "flex";
     }
 }
 let tasks = new Tasks()
+tasks.init()
