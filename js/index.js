@@ -1,36 +1,33 @@
 class Tasks {
     constructor() {
         this.tasks = []
-        this.list = ""
-    }
-    init() {
-        document.querySelectorAll(".list-name").forEach((element) => {
-            element.addEventListener("click", () => this.viewList(element));
-            element.addEventListener("contextmenu", (e) => this.manageList(e), false);
-        });        
+        this.list = localStorage.getItem("list")
+        this.currentTasks = this.tasks.find((list) => list.name === this.list);
     }
     addTask() {
         let task = document.getElementById("task").value
+        console.log(this.tasks)
         const list = this.tasks.find((list) => list.name === this.list);
         list.tasks.push({task: task, completed: false})
-        this.updateList(list.tasks)
+        this.updateTaskList(list.tasks)
         document.getElementById("task").value = ""
-        this.updateTasks()
+        this.update()
     }
 
     removeTask(task) {
-        if (this.tasks.hasOwnProperty(task)) {
-            delete this.tasks[task];
-        }
+        const list = this.tasks.find((list) => list.name === this.list);
+        this.tasks = list.tasks.filter(item => item.task !== task);
+        console.log(this.tasks)
     }
 
     editTask(task, updatedTask) {
-        if (this.tasks[this.list].hasOwnProperty(task)) {
-            const completed = this.tasks[this.list][task]
-            delete this.tasks[this.list][task];
-            this.tasks[updatedTask] = {completed: completed}
-            console.log(this.tasks)
-        }
+        let list = this.tasks.find(list => list.name == this.list)
+        list.tasks.forEach(oldTask => {
+            if (oldTask.task == task) {
+                oldTask.task = updatedTask
+            }
+        })
+        console.log(this.tasks)
     }
 
     resetList() {
@@ -38,9 +35,8 @@ class Tasks {
         taskViewDiv.innerHTML = ""
     }
 
-    updateList(tasks) {
+    updateTaskList(tasks) {
         this.resetList()
-        console.log(tasks)
         for(let task in tasks) {
             const taskViewDiv = document.querySelector('.tasks-list');
     
@@ -103,8 +99,7 @@ class Tasks {
         }
     }
 
-
-    updateTasks() {
+    updateTasks(){
         let checkboxes = document.querySelectorAll("input[type=checkbox]")
         checkboxes.forEach(element => {
             let task = element.parentElement
@@ -143,6 +138,25 @@ class Tasks {
             })
         })
     }
+    updateLists() {
+        let listHeader = document.getElementById("list-header")
+        listHeader.textContent = this.list
+        document.querySelectorAll(".list-name").forEach((element) => {
+            element.addEventListener("click", () => this.viewList(element));
+            element.addEventListener("contextmenu", (e) => this.manageList(e), false);
+        });
+    }
+    updateView() {
+        
+    }
+    update() {
+        try {
+            this.updateLists()
+            this.updateTasks()
+        } catch {
+
+        }
+    }
 
     addList() {
         let listName = document.getElementById("listName").value
@@ -155,17 +169,30 @@ class Tasks {
         this.tasks.push({name: listName, tasks: []})
         this.init()
     }
+    defualt() {
+        if (this.tasks.length == 0) {
+            let listName = "default"
+            let sideList = document.querySelector(".task-list")
+            let listElement = document.createElement("div")
+            listElement.textContent = listName
+            listElement.classList.add("list-name")
+            sideList.appendChild(listElement)
+            this.tasks.push({name: listName, tasks: []})
+            
+            localStorage.setItem("list", listName)
+            this.update()
+        }
+    }
     manageList(element) {
         element.preventDefault();
         console.log("test")
     }
 
     viewList(element) {
-        console.log(this.tasks)
+        console.log(this.tasks[element.textContent])
         let listName = element.textContent
-        let listHeader = document.getElementById("list-header")
-        this.list = listName
-        listHeader.textContent = this.list
+        localStorage.setItem("list", listName)
+        this.update()
     }
 
     closePopup() {
@@ -179,4 +206,4 @@ class Tasks {
     }
 }
 let tasks = new Tasks()
-tasks.init()
+tasks.defualt()
