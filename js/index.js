@@ -1,33 +1,39 @@
 class Tasks {
     constructor() {
-        this.tasks = []
-        this.list = localStorage.getItem("list")
-        this.currentTasks = this.tasks.find((list) => list.name === this.list);
+        this.tasks = this.defualt()
     }
+    updateLocalStorage() {
+        localStorage.setItem("tasks", JSON.stringify(this.tasks))
+    }
+    getLocalStorage() {
+        return JSON.parse(localStorage.getItem("tasks"))
+    }
+    getCurrentList() {
+        return this.getLocalStorage().find((list) => list.name === localStorage.getItem("list"));
+    }
+
     addTask() {
         let task = document.getElementById("task").value
-        console.log(this.tasks)
-        const list = this.tasks.find((list) => list.name === this.list);
+        const list = this.tasks.find((list) => list.name === localStorage.getItem("list"));
         list.tasks.push({task: task, completed: false})
-        this.updateTaskList(list.tasks)
         document.getElementById("task").value = ""
         this.update()
     }
 
     removeTask(task) {
-        const list = this.tasks.find((list) => list.name === this.list);
-        this.tasks = list.tasks.filter(item => item.task !== task);
-        console.log(this.tasks)
+        const list = this.getCurrentList()
+        list.tasks = list.tasks.filter(item => item.task !== task);
+        this.update()
     }
 
     editTask(task, updatedTask) {
-        let list = this.tasks.find(list => list.name == this.list)
+        const list = this.getCurrentList()
         list.tasks.forEach(oldTask => {
             if (oldTask.task == task) {
                 oldTask.task = updatedTask
             }
         })
-        console.log(this.tasks)
+        this.update()
     }
 
     resetList() {
@@ -35,8 +41,11 @@ class Tasks {
         taskViewDiv.innerHTML = ""
     }
 
-    updateTaskList(tasks) {
+    updateTaskList() {
         this.resetList()
+        const list = this.getCurrentList()
+        console.log(list)
+        let tasks = list.tasks
         for(let task in tasks) {
             const taskViewDiv = document.querySelector('.tasks-list');
     
@@ -59,7 +68,7 @@ class Tasks {
     
             const edit = document.createElement('input');
             edit.type = "text"
-            edit.placeholder = task
+            edit.placeholder = "task name"
     
             // Append checkbox and taskDetails to the inner div
             innerDiv.appendChild(checkbox);
@@ -138,61 +147,68 @@ class Tasks {
             })
         })
     }
-    updateLists() {
-        let listHeader = document.getElementById("list-header")
-        listHeader.textContent = this.list
-        document.querySelectorAll(".list-name").forEach((element) => {
-            element.addEventListener("click", () => this.viewList(element));
-            element.addEventListener("contextmenu", (e) => this.manageList(e), false);
-        });
-    }
-    updateView() {
-        
-    }
-    update() {
-        try {
-            this.updateLists()
-            this.updateTasks()
-        } catch {
-
+    resetSide(){
+        const elements = document.getElementsByClassName("list-name");
+        while(elements.length > 0){
+            elements[0].parentNode.removeChild(elements[0]);
         }
     }
-
-    addList() {
-        let listName = document.getElementById("listName").value
-        let sideList = document.querySelector(".task-list")
-        let listElement = document.createElement("div")
-        listElement.textContent = listName
-        listElement.classList.add("list-name")
-        sideList.appendChild(listElement)
-
-        this.tasks.push({name: listName, tasks: []})
-        this.init()
-    }
-    defualt() {
-        if (this.tasks.length == 0) {
-            let listName = "default"
+    updateLists() {
+        const lists = this.getLocalStorage()
+        this.resetSide()
+        for (let list in lists) {
+            let listHeader = document.getElementById("list-header")
+            listHeader.textContent = this.getCurrentList().name
+            let listName = lists[list].name
             let sideList = document.querySelector(".task-list")
             let listElement = document.createElement("div")
             listElement.textContent = listName
             listElement.classList.add("list-name")
             sideList.appendChild(listElement)
-            this.tasks.push({name: listName, tasks: []})
-            
-            localStorage.setItem("list", listName)
-            this.update()
+            document.querySelectorAll(".list-name").forEach((element) => {
+                element.addEventListener("click", () => this.viewList(element));
+                element.addEventListener("contextmenu", (e) => this.manageList(e), false);
+            });
+        }
+
+    }
+    update() {
+        try {
+            this.updateLocalStorage()
+            this.updateLists()
+            this.updateTaskList()
+            this.updateTasks()
+        } catch(e) {
+            console.error(e)
+        }
+    }
+
+    addList() {
+        let listName = document.getElementById("listName").value
+        this.tasks.push({name: listName, tasks: []})
+        this.update()
+    }
+    defualt() {
+        if (this.getLocalStorage() == null) {
+            let defaultList = [{name: "default", tasks: []}]
+            localStorage.setItem("tasks", JSON.stringify(defaultList))
+            localStorage.setItem("list", "default")
+            return this.getLocalStorage()
+        } else {
+            return this.getLocalStorage()
         }
     }
     manageList(element) {
         element.preventDefault();
-        console.log("test")
     }
 
     viewList(element) {
-        console.log(this.tasks[element.textContent])
         let listName = element.textContent
         localStorage.setItem("list", listName)
+        let listHeader = document.getElementById("list-header")
+        listHeader.textContent = localStorage.getItem("list")
         this.update()
+        
     }
 
     closePopup() {
@@ -207,3 +223,4 @@ class Tasks {
 }
 let tasks = new Tasks()
 tasks.defualt()
+tasks.update()
