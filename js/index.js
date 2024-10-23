@@ -47,7 +47,6 @@ class Tasks {
     updateTaskList() {
         this.resetList()
         const list = this.getCurrentLocalList()
-        console.log(list)
         let tasks = list.tasks
         for(let task in tasks) {
             const taskViewDiv = document.querySelector('.tasks-list');
@@ -210,11 +209,9 @@ class Tasks {
             return this.getLocalStorage()
         }
     }
-    deleteList(element) {
+    deleteList() {
         let name = this.getCurrentList().name
-        console.log(name)
         this.tasks = this.tasks.filter(list => list.name !== name)
-        console.log(this.tasks)
         if (this.tasks.length > 0) {
             localStorage.setItem("list", this.tasks[0].name)
         } else {
