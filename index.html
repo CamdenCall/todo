@@ -18,7 +18,7 @@
                 <div class="card">
                     <div>
                         <h2>Create List</h2>
-                        <img src="images/exit.svg" onclick="tasks.closePopup()">
+                        <img src="images/exit.svg" alt="exit button"onclick="tasks.closePopup()">
                     </div>
 
                     <input type="text" placeholder="List Name" id="listName">
@@ -27,33 +27,22 @@
 
             </div>
             <input type="text" placeholder="Search List">
-            <!--
             <div class="list-name">
                 List Name
             </div>
-        -->
         </div>
         <div class="task-view">
-            <h1 id="list-header">bro</h1>
+            <div class="task-header">
+                <h1 id="list-header">bro</h1>
+                <div class="list-delete" onclick="tasks.deleteList()">Delete</div>
+            </div>
+
             
             <div class="add-task">
               <input type="text" placeholder="Enter a new task" id="task">
               <button class="add" onclick="tasks.addTask()">Add Task</button>
             </div>
             <div class="tasks-list">
-                <!--
-                <div class="task">
-                    <div>
-                        <input type="checkbox">
-                        <p class="task-details">Something Ive Got to do</p>
-                        <input type="text" placeholder="Testing">
-                    </div>
-                    <div class="tools">
-                        <img src="images/edit.svg" height="30">
-                        <img src="images/delete.svg" class="delete">
-                    </div>
-                </div>
-                -->
             </div>
 
         </div>

@@ -9,12 +9,15 @@ class Tasks {
         return JSON.parse(localStorage.getItem("tasks"))
     }
     getCurrentList() {
+        return this.tasks.find((list) => list.name === localStorage.getItem("list"));
+    }
+    getCurrentLocalList() {
         return this.getLocalStorage().find((list) => list.name === localStorage.getItem("list"));
     }
 
     addTask() {
         let task = document.getElementById("task").value
-        const list = this.tasks.find((list) => list.name === localStorage.getItem("list"));
+        const list = this.getCurrentList()
         list.tasks.push({task: task, completed: false})
         document.getElementById("task").value = ""
         this.update()
@@ -43,7 +46,7 @@ class Tasks {
 
     updateTaskList() {
         this.resetList()
-        const list = this.getCurrentList()
+        const list = this.getCurrentLocalList()
         console.log(list)
         let tasks = list.tasks
         for(let task in tasks) {
@@ -115,7 +118,17 @@ class Tasks {
             let taskText = task.querySelector(".task-text p").textContent
             element.addEventListener("click", () => {
                 element.parentElement.parentElement.classList.toggle("checked")
-                this.tasks[taskText].completed = true
+                let list = this.getCurrentList()
+                list.tasks.forEach(oldTask => {
+                    if (oldTask.task == taskText) {
+                        if (oldTask.completed == true) {
+                            oldTask.completed = false;
+                        } else {
+                           oldTask.completed = true; 
+                        }
+                        
+                    }
+                })
             })
         })
         document.querySelectorAll(".delete").forEach((element) => {
@@ -158,7 +171,7 @@ class Tasks {
         this.resetSide()
         for (let list in lists) {
             let listHeader = document.getElementById("list-header")
-            listHeader.textContent = this.getCurrentList().name
+            listHeader.textContent = this.getCurrentLocalList().name
             let listName = lists[list].name
             let sideList = document.querySelector(".task-list")
             let listElement = document.createElement("div")
@@ -167,8 +180,7 @@ class Tasks {
             sideList.appendChild(listElement)
             document.querySelectorAll(".list-name").forEach((element) => {
                 element.addEventListener("click", () => this.viewList(element));
-                element.addEventListener("contextmenu", (e) => this.manageList(e), false);
-            });
+            });       
         }
 
     }
@@ -179,7 +191,7 @@ class Tasks {
             this.updateTaskList()
             this.updateTasks()
         } catch(e) {
-            console.error(e)
+            //console.error(e)
         }
     }
 
@@ -198,8 +210,18 @@ class Tasks {
             return this.getLocalStorage()
         }
     }
-    manageList(element) {
-        element.preventDefault();
+    deleteList(element) {
+        let name = this.getCurrentList().name
+        console.log(name)
+        this.tasks = this.tasks.filter(list => list.name !== name)
+        console.log(this.tasks)
+        if (this.tasks.length > 0) {
+            localStorage.setItem("list", this.tasks[0].name)
+        } else {
+            this.tasks = [{ name: "default", tasks: [] }];
+            localStorage.setItem("list", "default");
+        }
+        this.update()
     }
 
     viewList(element) {

@@ -108,6 +108,7 @@ body {
         .list-name {
             padding: 15px 15px;
             background-color: rgba(255,255,255,0.5);
+            position: relative;
             cursor: pointer;
             font-size: 14px;
         }
@@ -118,6 +119,22 @@ body {
         display: flex;
         flex-direction: column;
         gap: 25px;
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+        }
+        .list-delete{
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            border-radius: 5px;
+            width: auto;
+            background-color: black;
+            color: white;
+            right: 5px;
+            top: 5px;
+            z-index: 999;
+        }
         .add-task {
             width: 100%;
             gap: 10px;
